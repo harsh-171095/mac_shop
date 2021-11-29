@@ -8,6 +8,19 @@ enum ValidationType {
 }
 
 class Validation {
+  static bool isRequired(String value, {bool allowEmptySpaces = true}) {
+    if (value == null || value.isEmpty) {
+      return false;
+    } else {
+      if (!allowEmptySpaces) {
+        // Check if the string is not only made of empty spaces
+        if (RegExp(r"\s").hasMatch(value)) {
+          return false;
+        }
+      }
+      return true; // passed
+    }
+  }
   ValidationInfo getValidation(ValidationType type, String text) {
     switch (type) {
       case ValidationType.email:
