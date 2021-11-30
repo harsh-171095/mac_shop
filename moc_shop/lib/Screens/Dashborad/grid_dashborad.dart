@@ -3,8 +3,10 @@ import 'package:moc_shop/Global%20Widget/my_label.dart';
 import 'package:moc_shop/Global/global_style.dart';
 import 'package:moc_shop/Providers/Product/product_model.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:moc_shop/Providers/Product/product_provider.dart';
 import 'package:moc_shop/Screens/AddProduct/add_product.dart';
 import 'package:moc_shop/Utils/routs.dart';
+import 'package:provider/provider.dart';
 import './product_grid_cell.dart';
 
 class GridDashborad extends StatelessWidget {
@@ -28,17 +30,13 @@ class GridDashborad extends StatelessWidget {
           mainAxisSpacing: 10,
         ),
         itemCount: array.length,
-        itemBuilder: (ctx, i) => ProductGridCell(
-                ProductModel(
-                    id: i.toString(),
-                    title: "My T-Shart good",
-                    description: "no",
-                    price: 15.5), onTap: () {
+        itemBuilder: (ctx, i) => ProductGridCell(array[i], onTap: () {
               print('didSelected grid cell with index:$i');
               AppRoutes.push(
                   context,
                   AddProduct(
                     screenType: AddProductScreenType.edit,
+                    id: array[i].id,
                   ));
             }, onRemove: (id) {
               showAlert(context, id);
@@ -50,21 +48,23 @@ class GridDashborad extends StatelessWidget {
         context: ctx,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: MyLabel("Delete Product", AppTextStyle.productPriceL),
+            title: MyLabel("Delete Product", AppTextStyle.boldWithBlackColor),
             content: MyLabel("Are you soure you want to delete this product?",
-                AppTextStyle.productNameL),
+                AppTextStyle.subtitleWithBlack),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
+                  Provider.of<ProductProvider>(context, listen: false)
+                      .deleteProduct(id);
                   Navigator.of(context).pop();
                 },
-                child: MyLabel("Delete", AppTextStyle.productPriceL),
+                child: MyLabel("Delete", AppTextStyle.boldWithBlackColor),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: MyLabel("Cancel", AppTextStyle.productPriceL),
+                child: MyLabel("Cancel", AppTextStyle.boldWithBlackColor),
               ),
             ],
           );

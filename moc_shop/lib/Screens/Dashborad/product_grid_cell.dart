@@ -20,14 +20,13 @@ class ProductGridCell extends StatelessWidget {
           padding: const EdgeInsets.only(right: 5, top: 5),
           child: InkWell(
             onTap: () {
-              onTap();
+              // onTap();
             },
             child: Card(
               child: Stack(
                 children: [
                   Center(
-                    child: Image.network(
-                        'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcT_Va2UUB2ASvvqInJtLw9UEplaa9rToSfGe3SFv2GmDb5TKahjn2TWxJeLOTRQC52BK7846RlWlw'),
+                    child: Image.asset('assets/images/shopping.png'),
                   ),
                   Align(
                     alignment: Alignment.bottomLeft,
@@ -38,9 +37,12 @@ class ProductGridCell extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          MyLabel(dataObj.title, AppTextStyle.productNameG),
-                          MyLabel("15 Jan 2021", AppTextStyle.productNameG),
-                          MyLabel("myntra.com", AppTextStyle.productPriceG),
+                          MyLabel(
+                              dataObj.name, AppTextStyle.boldWithWhiteColor),
+                          MyLabel(dataObj.launchedate,
+                              AppTextStyle.titleWithWhiteColor),
+                          MyLabel(dataObj.launchsite,
+                              AppTextStyle.titleWithWhiteColor),
                         ],
                       ),
                       decoration: const BoxDecoration(
@@ -61,7 +63,8 @@ class ProductGridCell extends StatelessWidget {
                             color: Colors.amber,
                             size: 15,
                           ),
-                          MyLabel("4.5", AppTextStyle.productPriceL)
+                          MyLabel(dataObj.popularity,
+                              AppTextStyle.boldWithBlackColor)
                         ],
                       ),
                     ),
@@ -73,14 +76,33 @@ class ProductGridCell extends StatelessWidget {
         ),
         Align(
           alignment: Alignment.topRight,
-          child: InkWell(
-            onTap: () {
-              onRemove(dataObj.id);
-            },
-            child: const Icon(
-              Icons.cancel,
-              color: Colors.redAccent,
-            ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              InkWell(
+                onTap: () {
+                  onTap();
+                },
+                child: const Icon(
+                  Icons.edit,
+                  color: Colors.blue,
+                  size: 18,
+                ),
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              InkWell(
+                onTap: () {
+                  onRemove(dataObj.id);
+                },
+                child: const Icon(
+                  Icons.cancel,
+                  color: Colors.redAccent,
+                ),
+              ),
+            ],
           ),
         )
       ],

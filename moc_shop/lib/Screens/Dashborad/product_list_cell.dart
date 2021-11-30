@@ -15,9 +15,7 @@ class ProductListCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        onTap();
-      },
+      onTap: () {},
       child: Container(
         margin: const EdgeInsets.only(top: 5, bottom: 5),
         child: Stack(
@@ -30,46 +28,78 @@ class ProductListCell extends StatelessWidget {
                     SizedBox(
                       height: 55,
                       width: 55,
-                      child: Image.network(
-                          'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcT_Va2UUB2ASvvqInJtLw9UEplaa9rToSfGe3SFv2GmDb5TKahjn2TWxJeLOTRQC52BK7846RlWlw'),
+                      child: Image.asset('assets/images/shopping.png'),
                     ),
                     Expanded(
-                        child: Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          MyLabel(dataObj.title, AppTextStyle.productNameL),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          MyLabel("15 Jan 2021", AppTextStyle.productNameL),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          MyLabel("myntra.com", AppTextStyle.productPriceL),
-                          const RatingWidget(rating: 2.5),
-                        ],
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            MyLabel(
+                                dataObj.name, AppTextStyle.titleWithBlackColor),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            MyLabel(dataObj.launchedate,
+                                AppTextStyle.subtitleWithBlack),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            MyLabel(dataObj.launchsite,
+                                AppTextStyle.subtitleWithBlack),
+                            RatingWidget(
+                              rating: double.parse(dataObj.popularity),
+                            ),
+                          ],
+                        ),
                       ),
-                    )),
+                    ),
+                    Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            onTap();
+                          },
+                          child: const Icon(
+                            Icons.edit,
+                            color: Colors.blue,
+                            size: 18,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            onRemove(dataObj.id);
+                          },
+                          child: const Icon(
+                            Icons.delete,
+                            color: Colors.redAccent,
+                            size: 20,
+                          ),
+                        ),
+                      ],
+                    )
                   ],
                 ),
               ),
             ),
-            Align(
-              alignment: Alignment.topRight,
-              child: InkWell(
-                onTap: () {
-                  print("cell remove");
-                  onRemove(dataObj.id);
-                },
-                child: const Icon(
-                  Icons.cancel,
-                  color: Colors.redAccent,
-                ),
-              ),
-            )
+            // Align(
+            //   alignment: Alignment.topRight,
+            //   child: InkWell(
+            //     onTap: () {
+            //       print("cell remove");
+            //       onRemove(dataObj.id);
+            //     },
+            //     child: const Icon(
+            //       Icons.cancel,
+            //       color: Colors.redAccent,
+            //     ),
+            //   ),
+            // )
           ],
         ),
       ),

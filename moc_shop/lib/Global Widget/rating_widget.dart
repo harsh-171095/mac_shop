@@ -6,27 +6,29 @@ class RatingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('RatingWidget $rating');
     return Container(
-        height: 20,
-        alignment: Alignment.topLeft,
-        child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: 5,
-            itemBuilder: (ctx, index) {
-              print(index.toDouble() + 1.0);
-              print(rating);
-              if (rating > (index.toDouble() + 1.0)) {
-                return const Icon(
-                  Icons.star,
-                  size: 15,
-                  color: Colors.amber,
-                );
-              }
+      height: 20,
+      alignment: Alignment.topLeft,
+      child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: 5,
+          itemBuilder: (ctx, index) {
+            print(index.toDouble() + 1.0);
+            print(rating);
+            if (rating >= (index.toDouble() + 1.0)) {
               return const Icon(
-                Icons.star_border,
+                Icons.star,
                 size: 15,
                 color: Colors.amber,
               );
-            }));
+            }
+            return const Icon(
+              Icons.star_border,
+              size: 15,
+              color: Colors.amber,
+            );
+          }),
+    );
   }
 }

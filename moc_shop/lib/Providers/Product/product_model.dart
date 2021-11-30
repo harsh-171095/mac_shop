@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 
 class ProductModel {
   final String id;
-  final String title;
-  final String description;
-  final double price;
-  String imageUrl = "";
+  final String name;
+  final String launchedate;
+  final String launchsite;
+  final String popularity;
 
   ProductModel({
     required this.id,
-    required this.title,
-    required this.description,
-    required this.price,
+    required this.name,
+    required this.launchedate,
+    required this.launchsite,
+    required this.popularity,
   });
 }
