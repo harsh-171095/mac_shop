@@ -38,7 +38,7 @@ class ProductListCell extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          MyLabel(dataObj.title, AppTextStyle.productNameL),
+                          MyLabel(dataObj.name, AppTextStyle.productNameL),
                           const SizedBox(
                             height: 5,
                           ),

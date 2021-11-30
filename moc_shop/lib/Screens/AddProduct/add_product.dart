@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:moc_shop/Global%20Widget/my_appbar.dart';
 import 'package:moc_shop/Global%20Widget/my_text_filed.dart';
 import 'package:moc_shop/Global/validation.dart';
+import 'package:moc_shop/Providers/Product/product_model.dart';
+import 'package:moc_shop/Providers/Product/product_provider.dart';
 import 'package:moc_shop/Screens/Dashborad/grid_dashborad.dart';
+import 'package:provider/provider.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class AddProduct extends StatefulWidget {
@@ -13,13 +16,11 @@ class AddProduct extends StatefulWidget {
 class _AddProductScreenState extends State<AddProduct> {
   final _formKey = GlobalKey<FormState>();
   bool enableAutoValidate = false;
-  MyTextFiled _productNameController = MyTextFiled(
-    placehoder: 'Enter name',
-  );
+  TextEditingController _productNameController = TextEditingController();
   TextEditingController _launchedAtController = TextEditingController();
   TextEditingController _launchSiteController = TextEditingController();
-  TextEditingController _popularityController = TextEditingController();
   var rating = 1.0;
+  var ratingCount;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,19 @@ class _AddProductScreenState extends State<AddProduct> {
           child: ListView(
             padding: EdgeInsets.all(16.0),
             children: [
-              _productNameController,
+              TextFormField(
+                controller: _productNameController,
+                textInputAction: TextInputAction.next,
+                decoration: InputDecoration(
+                  labelText: 'Product Name',
+                ),
+                validator: (value) {
+                  if (!Validation.isRequired(value!, allowEmptySpaces: true)) {
+                    return 'Product Name required';
+                  }
+                  return null;
+                },
+              ),
               SizedBox(height: 10),
               TextFormField(
                 controller: _launchedAtController,
@@ -60,11 +73,11 @@ class _AddProductScreenState extends State<AddProduct> {
                 controller: _launchSiteController,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
-                  labelText: 'LaunchSite',
+                  labelText: 'Launch Site',
                 ),
                 validator: (value) {
                   if (!Validation.isRequired(value!, allowEmptySpaces: true)) {
-                    return 'LaunchSite required';
+                    return 'Launch Site required';
                   }
                   return null;
                 },
@@ -72,7 +85,9 @@ class _AddProductScreenState extends State<AddProduct> {
               SizedBox(height: 10),
               SmoothStarRating(
                   allowHalfRating: false,
-                  onRated: (v) {},
+                  onRated: (v) {
+                    ratingCount = v;
+                  },
                   starCount: 5,
                   rating: rating,
                   size: 40.0,
@@ -83,7 +98,22 @@ class _AddProductScreenState extends State<AddProduct> {
               SizedBox(height: 30),
               ElevatedButton(
                 onPressed: () {
-                  _onSubmitted();
+                  setState(() {
+                    enableAutoValidate = true;
+                  });
+                  if (_formKey.currentState!.validate()) {
+                    DateTime _now = DateTime.now();
+
+                    ProductModel product  = ProductModel(
+                        id: _now.toString(),
+                        name: _productNameController.text,
+                        launchedate: _launchedAtController.text,
+                        launchsite: _launchSiteController.text,
+                        popularity: ratingCount.toString());
+
+                    Provider.of<ProductProvider>(context,listen: false).addProduct(product);
+
+                  }
                 },
                 child: Text('Submit'),
               )
@@ -123,10 +153,6 @@ class _AddProductScreenState extends State<AddProduct> {
   }
 
   void _onSubmitted() {
-    final bool isValidProductName =
-        _productNameController.isValidate(ValidationType.productName);
-    if (isValidProductName) {
-      //Add here to add product
-    }
+
   }
 }

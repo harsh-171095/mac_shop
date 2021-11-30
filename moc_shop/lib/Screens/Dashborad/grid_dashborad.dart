@@ -19,11 +19,12 @@ class GridDashborad extends StatelessWidget {
         ),
         itemCount: 5,
         itemBuilder: (ctx, i) => ProductGridCell(
-                ProductModel(
-                    id: i.toString(),
-                    title: "My T-Shart good",
-                    description: "no",
-                    price: 15.5),
+            ProductModel(
+                id: i.toString(),
+                name: "My T-Shart good",
+                launchedate: "no",
+                launchsite: "no",
+                popularity: 15.5.toString()),
                 onTap: () {}, onRemove: (id) {
               showAlert(context, id);
             }));

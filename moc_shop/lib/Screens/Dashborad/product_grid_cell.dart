@@ -36,7 +36,7 @@ class ProductGridCell extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          MyLabel(dataObj.title, AppTextStyle.productNameG),
+                          MyLabel(dataObj.name, AppTextStyle.productNameG),
                           MyLabel("15 Jan 2021", AppTextStyle.productNameG),
                           MyLabel("myntra.com", AppTextStyle.productPriceG),
                         ],

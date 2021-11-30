@@ -16,9 +16,10 @@ class ListDashborad extends StatelessWidget {
           return ProductListCell(
             ProductModel(
                 id: index.toString(),
-                title: "My T-Shart good",
-                description: "no",
-                price: 15.5),
+                name: "My T-Shart good",
+                launchedate: "no",
+                launchsite: "no",
+                popularity: 15.5.toString()),
             onTap: () {},
             onRemove: (String id) {
               print('remove');
