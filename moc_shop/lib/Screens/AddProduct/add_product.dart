@@ -5,7 +5,12 @@ import 'package:moc_shop/Global/validation.dart';
 import 'package:moc_shop/Screens/Dashborad/grid_dashborad.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
+enum AddProductScreenType { add, edit }
+
 class AddProduct extends StatefulWidget {
+  final AddProductScreenType screenType;
+  AddProduct({Key? key, this.screenType = AddProductScreenType.add})
+      : super(key: key);
   @override
   _AddProductScreenState createState() => _AddProductScreenState();
 }
@@ -25,7 +30,9 @@ class _AddProductScreenState extends State<AddProduct> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: MyAppBar('Add Product'),
+      appBar: MyAppBar(widget.screenType == AddProductScreenType.edit
+          ? 'Edit Product'
+          : 'Add Product'),
       body: Stack(children: [
         Form(
           key: _formKey,

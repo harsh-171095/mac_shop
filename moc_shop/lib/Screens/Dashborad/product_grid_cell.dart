@@ -19,7 +19,9 @@ class ProductGridCell extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(right: 5, top: 5),
           child: InkWell(
-            onTap: onTap(),
+            onTap: () {
+              onTap();
+            },
             child: Card(
               child: Stack(
                 children: [

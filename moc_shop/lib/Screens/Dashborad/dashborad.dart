@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:moc_shop/Global%20Widget/my_appbar.dart';
+import 'package:moc_shop/Global%20Widget/my_label.dart';
+import 'package:moc_shop/Global/global_style.dart';
+import 'package:moc_shop/Providers/Product/product_provider.dart';
 import 'package:moc_shop/Screens/AddProduct/add_product.dart';
 import 'package:moc_shop/Screens/Dashborad/grid_dashborad.dart';
 import 'package:moc_shop/Screens/Dashborad/list_dashborad.dart';
 import 'package:moc_shop/Utils/routs.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class Dashborad extends StatefulWidget {
   static const routeName = "/";
@@ -26,25 +31,33 @@ class _DashboradState extends State<Dashborad> {
           height: double.infinity,
           width: double.infinity,
           padding: const EdgeInsets.all(15),
-          child: _isGrid ? const ListDashborad() : const GridDashborad(),
+          child: Consumer<ProductProvider>(builder: (context, product, ch) {
+            return _isGrid
+                ? ListDashborad(array: product.items)
+                : GridDashborad(array: product.items);
+          }),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          AppRoutes.push(context, AddProduct());
+          setState(() {
+            _isGrid = !_isGrid;
+          });
         },
-        child: Icon(Icons.add),
+        child: Icon(_isGrid ? Icons.grid_view_rounded : Icons.list_rounded),
       ),
     );
   }
 
   Widget _ViewStyle() {
     return InkWell(
-      child: Icon(_isGrid ? Icons.grid_view_rounded : Icons.list_rounded),
+      child: kIsWeb
+          ? InkWell(
+              child: MyLabel("Add New Product", AppTextStyle.productPriceG),
+            )
+          : const Icon(Icons.add),
       onTap: () {
-        setState(() {
-          _isGrid = !_isGrid;
-        });
+        AppRoutes.push(context, AddProduct());
       },
     );
   }

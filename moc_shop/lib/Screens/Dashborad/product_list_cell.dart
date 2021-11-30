@@ -15,7 +15,9 @@ class ProductListCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap(),
+      onTap: () {
+        onTap();
+      },
       child: Container(
         margin: const EdgeInsets.only(top: 5, bottom: 5),
         child: Stack(

@@ -2,29 +2,45 @@ import 'package:flutter/material.dart';
 import 'package:moc_shop/Global%20Widget/my_label.dart';
 import 'package:moc_shop/Global/global_style.dart';
 import 'package:moc_shop/Providers/Product/product_model.dart';
-
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:moc_shop/Screens/AddProduct/add_product.dart';
+import 'package:moc_shop/Utils/routs.dart';
 import './product_grid_cell.dart';
 
 class GridDashborad extends StatelessWidget {
-  const GridDashborad();
+  final List<ProductModel> array;
+  const GridDashborad({Key? key, required this.array}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    double _Ratio = 1;
+    int _AxisCount = 2;
+    if (kIsWeb) {
+      _Ratio = 1;
+      _AxisCount = 8;
+    }
+
     return GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 1,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: _AxisCount,
+          childAspectRatio: _Ratio,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
         ),
-        itemCount: 5,
+        itemCount: array.length,
         itemBuilder: (ctx, i) => ProductGridCell(
                 ProductModel(
                     id: i.toString(),
                     title: "My T-Shart good",
                     description: "no",
-                    price: 15.5),
-                onTap: () {}, onRemove: (id) {
+                    price: 15.5), onTap: () {
+              print('didSelected grid cell with index:$i');
+              AppRoutes.push(
+                  context,
+                  AddProduct(
+                    screenType: AddProductScreenType.edit,
+                  ));
+            }, onRemove: (id) {
               showAlert(context, id);
             }));
   }

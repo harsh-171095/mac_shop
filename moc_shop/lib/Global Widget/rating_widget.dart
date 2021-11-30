@@ -13,34 +13,20 @@ class RatingWidget extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount: 5,
             itemBuilder: (ctx, index) {
+              print(index.toDouble() + 1.0);
+              print(rating);
               if (rating > (index.toDouble() + 1.0)) {
-                print(index.toDouble());
-                return const Padding(
-                  padding: EdgeInsets.all(5),
-                  child: Icon(
-                    Icons.star,
-                    size: 15,
-                    color: Colors.amber,
-                  ),
-                );
-              } else if (rating > (index + 1) && rating < (index + 1)) {
-                print(index.toDouble());
-                return const Padding(
-                  padding: EdgeInsets.all(5),
-                  child: Icon(
-                    Icons.star_half,
-                    size: 15,
-                  ),
-                );
-              } else {
-                return const Padding(
-                  padding: EdgeInsets.all(5),
-                  child: Icon(
-                    Icons.star_border,
-                    size: 15,
-                  ),
+                return const Icon(
+                  Icons.star,
+                  size: 15,
+                  color: Colors.amber,
                 );
               }
+              return const Icon(
+                Icons.star_border,
+                size: 15,
+                color: Colors.amber,
+              );
             }));
   }
 }
